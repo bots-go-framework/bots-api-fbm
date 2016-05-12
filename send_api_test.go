@@ -1,12 +1,12 @@
 package fbm_bot_api
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"testing"
-	"encoding/json"
-	"io/ioutil"
-	"bytes"
-	"fmt"
 )
 
 const ACCESS_TOKEN = "CAAGdsU6rzXgBAIVVFCQKsmZCue0PUpzuZA4BaZA80UfhxnRH2Nbf5Ri9K66tkXwkLuPa2WhN53MsiAngUUcE2wZBuhb5ZBO0DV5hVAQbOFuCuL5rP35FFQuf2NCkSs0IVwmhpkXkeAAt3a4yn4ZCnBkfearPByE4gbvSD4WfswvZBb6GrtTJ2ZAEgvawDfUWKKdcm8yXsuz2ZBAZDZD"
@@ -23,7 +23,7 @@ func TestGenericTemplateMessage(t *testing.T) {
 				Type: RequestAttachmentTypeTemplate,
 				Payload: NewGenericTemplate(
 					RequestElement{
-						Title: "Записать долг",
+						Title:    "Записать долг",
 						Subtitle: "Здесь можно создать новую операцию.\n\nПролистайте карточки влево-впрво чтобы увидеть другие опции.",
 						Buttons: []RequestButton{
 							NewRequestPostbackButton("Взял", "take"),
@@ -32,7 +32,7 @@ func TestGenericTemplateMessage(t *testing.T) {
 						},
 					},
 					RequestElement{
-						Title: "Как идут дела?",
+						Title:    "Как идут дела?",
 						Subtitle: "Тут смотрим баланс, историю и ближайшие платежи.",
 						Buttons: []RequestButton{
 							NewRequestPostbackButton("Баланс", "give"),
@@ -41,7 +41,7 @@ func TestGenericTemplateMessage(t *testing.T) {
 						},
 					},
 					RequestElement{
-						Title: "Картинка",
+						Title:    "Картинка",
 						Subtitle: "Пробная карточка",
 						ImageUrl: "https://debtstracker.io/img/debtstracker-512x512.png",
 						Buttons: []RequestButton{
@@ -61,7 +61,7 @@ func TestGenericTemplateMessage(t *testing.T) {
 	fmt.Println(string(data))
 	t.Log(string(data))
 	resp, err := http.Post(
-		"https://graph.facebook.com/v2.6/me/messages?access_token=" + ACCESS_TOKEN,
+		"https://graph.facebook.com/v2.6/me/messages?access_token="+ACCESS_TOKEN,
 		"application/json",
 		bytes.NewBuffer(data),
 	)

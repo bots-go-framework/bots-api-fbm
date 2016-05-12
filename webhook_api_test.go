@@ -1,9 +1,9 @@
 package fbm_bot_api
 
 import (
-	"testing"
 	"encoding/json"
-	"bitbucket.com/debtstracker/gae_app/strongo/strongo-bots"
+	"github.com/strongo/strongo-bots"
+	"testing"
 )
 
 func TestTextMessage(t *testing.T) {

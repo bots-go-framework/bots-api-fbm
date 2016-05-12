@@ -3,45 +3,44 @@ package fbm_bot_api
 type RequestNotificationType string
 
 const (
-	RequestAttachmentTypeImage = "image"
+	RequestAttachmentTypeImage    = "image"
 	RequestAttachmentTypeTemplate = "template"
 )
 const (
-	RequestNotificationTypeRegular = RequestNotificationType("REGULAR")
+	RequestNotificationTypeRegular    = RequestNotificationType("REGULAR")
 	RequestNotificationTypeSilentPush = RequestNotificationType("SILENT_PUSH")
-	RequestNotificationTypeNoPush = RequestNotificationType("NO_PUSH")
+	RequestNotificationTypeNoPush     = RequestNotificationType("NO_PUSH")
 )
 
 const (
 	RequestAttachmentTemplateTypeGeneric = "generic"
-	RequestAttachmentTemplateTypeButton = "button"
+	RequestAttachmentTemplateTypeButton  = "button"
 	RequestAttachmentTemplateTypeReceipt = "receipt"
 )
 
 const (
 	RequestButtonTypePostback = "postback"
-	RequestButtonTypeWebUrl = "web_url"
+	RequestButtonTypeWebUrl   = "web_url"
 )
 
-
 type Request struct {
-	Recipient RequestRecipient `json:"recipient"`
-	Message RequestMessage `json:"message"`
+	Recipient        RequestRecipient        `json:"recipient"`
+	Message          RequestMessage          `json:"message"`
 	NotificationType RequestNotificationType `json:"notification_type,omitempty"` // Optional: Push notification type: REGULAR, SILENT_PUSH, NO_PUSH
 }
 
 type RequestRecipient struct { // phone_number or id must be set
-	Id int64 `json:"id,omitempty"`
+	Id          int64  `json:"id,omitempty"`
 	PhoneNumber string `json:"phone_number,omitempty"` // Phone number of the recipient with the format +1(212)555-2368
 }
 
-type RequestMessage struct {  				// text or attachment must be set
-	Text string `json:"text,omitempty"`  				// Message text, must be UTF-8, 320 character limit
-	Attachment *RequestAttachment `json:"attachment,omitempty"`  // Attachment data
+type RequestMessage struct { // text or attachment must be set
+	Text       string             `json:"text,omitempty"`       // Message text, must be UTF-8, 320 character limit
+	Attachment *RequestAttachment `json:"attachment,omitempty"` // Attachment data
 }
 
 type RequestAttachment struct {
-	Type string `json:"type,omitempty"`
+	Type    string                   `json:"type,omitempty"`
 	Payload RequestAttachmentPayload `json:"payload,omitempty"`
 }
 
@@ -80,7 +79,7 @@ type RequestPostbackButton struct {
 }
 
 type RequestButton struct {
-	Type string `json:"type"` // Value is web_url or postback
+	Type  string `json:"type"`  // Value is web_url or postback
 	Title string `json:"title"` // Button title
 	RequestWebUrlButton
 	RequestPostbackButton
@@ -88,7 +87,7 @@ type RequestButton struct {
 
 func NewRequestPostbackButton(title, payload string) RequestButton {
 	return RequestButton{
-		Type: RequestButtonTypePostback,
+		Type:  RequestButtonTypePostback,
 		Title: title,
 		RequestPostbackButton: RequestPostbackButton{Payload: payload},
 	}
@@ -96,18 +95,18 @@ func NewRequestPostbackButton(title, payload string) RequestButton {
 
 func NewRequestWebUrlButton(title, url string) RequestButton {
 	return RequestButton{
-		Type: RequestButtonTypeWebUrl,
-		Title: title,
+		Type:                RequestButtonTypeWebUrl,
+		Title:               title,
 		RequestWebUrlButton: RequestWebUrlButton{Url: url},
 	}
 }
 
 type RequestElement struct {
-	Title string 				`json:"title"` 		// Required: Bubble title
-	Subtitle string 			`json:"subtitle,omitempty"` 	// Optional: Bubble subtitle
-	ImageUrl string 			`json:"image_url,omitempty"` 	// Optional: Bubble image
-	ItemUrl string 			`json:"item_url,omitempty"` 	// Optional: URL that is opened when bubble is tapped
-	Buttons []RequestButton `json:"buttons,omitempty"`		// Optional: Set of buttons that appear as call-to-actions
+	Title    string          `json:"title"`               // Required: Bubble title
+	Subtitle string          `json:"subtitle,omitempty"`  // Optional: Bubble subtitle
+	ImageUrl string          `json:"image_url,omitempty"` // Optional: Bubble image
+	ItemUrl  string          `json:"item_url,omitempty"`  // Optional: URL that is opened when bubble is tapped
+	Buttons  []RequestButton `json:"buttons,omitempty"`   // Optional: Set of buttons that appear as call-to-actions
 }
 
 func NewGenericTemplate(elements ...RequestElement) RequestAttachmentPayload {
