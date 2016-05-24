@@ -60,6 +60,14 @@ func (m Messaging) InputInlineQuery() bots.WebhookInlineQuery {
 	panic("Not implemented")
 }
 
+func (m Messaging) InputCallbackQuery() bots.WebhookCallbackQuery {
+	panic("Not implemented")
+}
+
+func (m Messaging) InputChosenInlineResult() bots.WebhookChosenInlineResult {
+	panic("Not implemented")
+}
+
 func (m Messaging) InputType() bots.WebhookInputType {
 	switch {
 	case m.Message != nil:
