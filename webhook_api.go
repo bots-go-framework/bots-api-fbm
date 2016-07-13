@@ -104,6 +104,10 @@ func (a Actor) GetUserName() string {
 	return ""
 }
 
+func (a Actor) Platform() string {
+	return ""
+}
+
 // Sender ...
 type Sender struct {
 	Actor

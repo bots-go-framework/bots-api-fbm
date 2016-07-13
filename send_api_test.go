@@ -28,7 +28,7 @@ func TestGenericTemplateMessage(t *testing.T) {
 						Buttons: []RequestButton{
 							NewRequestPostbackButton("Взял", "take"),
 							NewRequestPostbackButton("Дал", "give"),
-							NewRequestPostbackButton("Вернул", "return"),
+							NewRequestPostbackButton("Возврат", "return"),
 						},
 					},
 					RequestElement{
