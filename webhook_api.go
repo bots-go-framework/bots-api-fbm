@@ -13,7 +13,7 @@ type ReceivedMessage struct {
 
 // Entry ...
 type Entry struct {
-	ID        int64       `json:"id"`
+	ID        string       `json:"id"`
 	Time      int64       `json:"time"`
 	Messaging []Messaging `json:"messaging"`
 }
@@ -36,56 +36,9 @@ type Messaging struct {
 	Delivery  *Delivery `json:"delivery"`
 }
 
-func (m Messaging) GetSender() bots.WebhookSender {
-	return m.Sender
-}
-func (m Messaging) GetRecipient() bots.WebhookRecipient {
-	return m.Recipient
-}
-func (m Messaging) GetTime() time.Time {
-	return time.Unix(m.Timestamp, 0)
-}
-
-func (m Messaging) InputMessage() bots.WebhookMessage {
-	return nil
-}
-func (m Messaging) InputPostback() bots.WebhookPostback {
-	return nil
-}
-func (m Messaging) InputDelivery() bots.WebhookDelivery {
-	return nil
-}
-
-func (m Messaging) InputInlineQuery() bots.WebhookInlineQuery {
-	panic("Not implemented")
-}
-
-func (m Messaging) InputCallbackQuery() bots.WebhookCallbackQuery {
-	panic("Not implemented")
-}
-
-func (m Messaging) InputChosenInlineResult() bots.WebhookChosenInlineResult {
-	panic("Not implemented")
-}
-
-func (m Messaging) InputType() bots.WebhookInputType {
-	switch {
-	case m.Message != nil:
-		if len(m.Message.Attachments) > 0 {
-			return bots.WebhookInputAttachment
-		} else if len(m.Message.Text) > 0 {
-			return bots.WebhookInputMessage
-		}
-	case m.Postback != nil:
-		return bots.WebhookInputPostback
-	case m.Delivery != nil:
-		return bots.WebhookInputDelivery
-	}
-	return bots.WebhookInputUnknown
-}
 
 type Actor struct {
-	ID int64 `json:"id"`
+	ID string `json:"id"`
 }
 
 func (a Actor) GetID() interface{} {
@@ -93,19 +46,19 @@ func (a Actor) GetID() interface{} {
 }
 
 func (a Actor) GetFirstName() string {
-	return ""
+	panic("Not supported")
 }
 
 func (a Actor) GetLastName() string {
-	return ""
+	panic("Not supported")
 }
 
 func (a Actor) GetUserName() string {
-	return ""
+	panic("Not supported")
 }
 
 func (a Actor) Platform() string {
-	return ""
+	return "fbm"
 }
 
 // Sender ...
@@ -134,8 +87,8 @@ type MessageIDs []MessageID
 // Message ...
 type Message struct {
 	MID         string       `json:"mid"`
-	Seq         int64        `json:"seq"`
-	Text        string       `json:"text"`
+	Seq         int          `json:"seq"`
+	MText       string       `json:"text"`
 	Attachments []Attachment `json:"attachments"`
 }
 
@@ -155,3 +108,25 @@ type SendMessage struct {
 		Text string `json:"text"`
 	} `json:"message"`
 }
+
+
+func (m Message) IntID() int64 {
+	panic("Not supported")
+}
+
+func (m Message) StringID() string {
+	return m.MID
+}
+
+func (m Message) Sequence() int {
+	return m.Seq
+}
+
+func (m Message) Text() string {
+	return m.MText
+}
+
+func (m Message) Contact() bots.WebhookContact {
+	panic("Not supported")
+}
+
