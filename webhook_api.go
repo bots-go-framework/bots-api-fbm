@@ -126,7 +126,7 @@ func (m Message) Text() string {
 	return m.MText
 }
 
-func (m Message) Contact() bots.WebhookContact {
+func (m Message) Contact() bots.WebhookContactMessage {
 	panic("Not supported")
 }
 
