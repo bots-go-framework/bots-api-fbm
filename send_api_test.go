@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-const ACCESS_TOKEN = "CAAGdsU6rzXgBAIVVFCQKsmZCue0PUpzuZA4BaZA80UfhxnRH2Nbf5Ri9K66tkXwkLuPa2WhN53MsiAngUUcE2wZBuhb5ZBO0DV5hVAQbOFuCuL5rP35FFQuf2NCkSs0IVwmhpkXkeAAt3a4yn4ZCnBkfearPByE4gbvSD4WfswvZBb6GrtTJ2ZAEgvawDfUWKKdcm8yXsuz2ZBAZDZD"
+const ACCESS_TOKEN = "EAAIOtyFmtbsBAA4CuLiZALf4R4voPZBg3AySB63XB8SdRsid7FB2dWwHJgAgONJ0olWEGcOEVYXEjsZBeQ1M124keNAWhgWj3XwIDJ4mfYCl1m1DUuwaZCaOZCm7BZCY6TWwAKTRL5Uv0BSilWVhwGZBDcVmUg8Cm5na19KrFUVOAZDZD"
 
 func TestGenericTemplateMessage(t *testing.T) {
 	//var i int
@@ -17,7 +17,8 @@ func TestGenericTemplateMessage(t *testing.T) {
 	//t.Error(i)
 	fmt.Println("Test 1")
 	request := Request{
-		Recipient: RequestRecipient{Id: 1038405329567665},
+		//Recipient: RequestRecipient{Id: "1038405329567665"},
+		Recipient: RequestRecipient{Id: "1315593905118354"}, // DebtsTracker.DEV
 		Message: RequestMessage{
 			Attachment: &RequestAttachment{
 				Type: RequestAttachmentTypeTemplate,

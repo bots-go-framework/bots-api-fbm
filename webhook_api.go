@@ -1,7 +1,6 @@
 package fbm_bot_api
 
 import (
-	"github.com/strongo/bots-framework/core"
 	"time"
 )
 
@@ -46,15 +45,15 @@ func (a Actor) GetID() interface{} {
 }
 
 func (a Actor) GetFirstName() string {
-	panic("Not supported")
+	return "First" //TODO: Make call to API
 }
 
 func (a Actor) GetLastName() string {
-	panic("Not supported")
+	return "Last" //TODO: Make call to API
 }
 
 func (a Actor) GetUserName() string {
-	panic("Not supported")
+	return "Username" //TODO: Make call to API
 }
 
 func (a Actor) Platform() string {
@@ -126,7 +125,4 @@ func (m Message) Text() string {
 	return m.MText
 }
 
-func (m Message) Contact() bots.WebhookContactMessage {
-	panic("Not supported")
-}
 

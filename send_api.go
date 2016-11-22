@@ -30,7 +30,7 @@ type Request struct {
 }
 
 type RequestRecipient struct { // phone_number or id must be set
-	Id          int64  `json:"id,omitempty"`
+	Id          string `json:"id,omitempty"` // Alex: changed from int64 on 21st November
 	PhoneNumber string `json:"phone_number,omitempty"` // Phone number of the recipient with the format +1(212)555-2368
 }
 
@@ -71,7 +71,10 @@ type RequestAttachmentPayload struct {
 }
 
 type RequestWebUrlButton struct {
-	Url string `json:"url,omitempty"` // For web_url buttons, this URL is opened in a mobile browser when the button is tapped
+	Url                 string `json:"url,omitempty"` // For web_url buttons, this URL is opened in a mobile browser when the button is tapped
+	FallbackUrl         string `json:"fallback_url,omitempty"`
+	WebviewHeightRatio  string `json:"webview_height_ratio,omitempty"`
+	MessengerExtensions bool `json:"messenger_extensions,omitempty"`
 }
 
 type RequestPostbackButton struct {
@@ -101,6 +104,29 @@ func NewRequestWebUrlButton(title, url string) RequestButton {
 	}
 }
 
+func NewRequestWebUrlButtonWithRatio(title, url, webviewHeightRatio string) RequestButton {
+	return RequestButton{
+		Type:                RequestButtonTypeWebUrl,
+		Title:               title,
+		RequestWebUrlButton: RequestWebUrlButton{
+			Url: url,
+			WebviewHeightRatio: webviewHeightRatio,
+		},
+	}
+}
+
+func NewRequestWebExtentionUrlButtonWithRatio(title, url, webviewHeightRatio string) RequestButton {
+	return RequestButton{
+		Type:                RequestButtonTypeWebUrl,
+		Title:               title,
+		RequestWebUrlButton: RequestWebUrlButton{
+			Url: url,
+			MessengerExtensions: true,
+			WebviewHeightRatio: webviewHeightRatio,
+		},
+	}
+}
+
 type RequestElement struct {
 	Title    string          `json:"title"`               // Required: Bubble title
 	Subtitle string          `json:"subtitle,omitempty"`  // Optional: Bubble subtitle
@@ -117,5 +143,21 @@ func NewGenericTemplate(elements ...RequestElement) RequestAttachmentPayload {
 				Elements: elements,
 			},
 		},
+	}
+}
+
+// https://developers.facebook.com/docs/messenger-platform/thread-settings/domain-whitelisting
+type RequestWhitelistDomain struct {
+	SettingType        string `json:"setting_type"` // Must be domain_whitelisting.
+	DomainActionType   string `json:"domain_action_type"`
+	WhitelistedDomains []string `json:"whitelisted_domains"`
+}
+
+func NewRequestWhitelistDomain(domainActionType string, domains... string) RequestWhitelistDomain {
+	return RequestWhitelistDomain{
+		SettingType: "domain_whitelisting",
+		DomainActionType: domainActionType,
+		WhitelistedDomains: domains,
+
 	}
 }

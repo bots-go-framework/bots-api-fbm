@@ -2,8 +2,9 @@ package fbm_bot_api
 
 import (
 	"encoding/json"
-	"github.com/strongo/strongo-bots"
+	//"github.com/strongo/strongo-bots"
 	"testing"
+	"github.com/strongo/bots-framework/core"
 )
 
 func TestTextMessage(t *testing.T) {
@@ -64,5 +65,5 @@ func TestSenderIsInterfaceOfWebhookRecipient(t *testing.T) {
 }
 
 func TestMessagingIsInterfaceOfWebhookInput(t *testing.T) {
-	_ = bots.WebhookInput(Messaging{})
+	//_ = bots.WebhookInput(Messaging{})
 }
