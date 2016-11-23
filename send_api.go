@@ -1,4 +1,6 @@
-package fbm_bot_api
+package fbm_api
+
+import "fmt"
 
 type RequestNotificationType string
 
@@ -14,6 +16,7 @@ const (
 
 const (
 	RequestAttachmentTemplateTypeGeneric = "generic"
+	RequestAttachmentTemplateTypeList    = "list"
 	RequestAttachmentTemplateTypeButton  = "button"
 	RequestAttachmentTemplateTypeReceipt = "receipt"
 )
@@ -52,6 +55,18 @@ type RequestAttachmentGenericTemplate struct {
 	Elements []RequestElement `json:"elements,omitempty"` // Data for each bubble in message
 }
 
+type RequestAttachmentListTemplate struct {
+	RequestAttachmentGenericTemplate
+	TopElementStyle string `json:"top_element_style,omitempty"`
+}
+
+type TopElementStyle string
+
+const (
+	TopElementStyleCompact TopElementStyle = "compact"
+	TopElementStyleLarge TopElementStyle = "large"
+)
+
 type RequestAttachmentButtonTemplate struct {
 }
 
@@ -60,7 +75,8 @@ type RequestAttachmentReceiptTemplate struct {
 
 type RequestAttachmentTemplate struct {
 	TemplateType string `json:"template_type,omitempty"`
-	RequestAttachmentGenericTemplate
+	RequestAttachmentListTemplate // Used for both List & Generic templates
+	// RequestAttachmentGenericTemplate - conflicts with RequestAttachmentListTemplate on json.Marshal - silently not marshalling Elements.
 	RequestAttachmentButtonTemplate
 	RequestAttachmentReceiptTemplate
 }
@@ -70,29 +86,29 @@ type RequestAttachmentPayload struct {
 	RequestAttachmentTemplate
 }
 
-type RequestWebUrlButton struct {
+type RequestWebUrlAction struct {
 	Url                 string `json:"url,omitempty"` // For web_url buttons, this URL is opened in a mobile browser when the button is tapped
 	FallbackUrl         string `json:"fallback_url,omitempty"`
 	WebviewHeightRatio  string `json:"webview_height_ratio,omitempty"`
 	MessengerExtensions bool `json:"messenger_extensions,omitempty"`
 }
 
-type RequestPostbackButton struct {
+type RequestPostbackAction struct {
 	Payload string `json:"payload,omitempty"` // For postback buttons, this data will be sent back to you via webhook
 }
 
 type RequestButton struct {
 	Type  string `json:"type"`  // Value is web_url or postback
 	Title string `json:"title"` // Button title
-	RequestWebUrlButton
-	RequestPostbackButton
+	RequestWebUrlAction
+	RequestPostbackAction
 }
 
 func NewRequestPostbackButton(title, payload string) RequestButton {
 	return RequestButton{
 		Type:  RequestButtonTypePostback,
 		Title: title,
-		RequestPostbackButton: RequestPostbackButton{Payload: payload},
+		RequestPostbackAction: RequestPostbackAction{Payload: payload},
 	}
 }
 
@@ -100,7 +116,7 @@ func NewRequestWebUrlButton(title, url string) RequestButton {
 	return RequestButton{
 		Type:                RequestButtonTypeWebUrl,
 		Title:               title,
-		RequestWebUrlButton: RequestWebUrlButton{Url: url},
+		RequestWebUrlAction: RequestWebUrlAction{Url: url},
 	}
 }
 
@@ -108,7 +124,7 @@ func NewRequestWebUrlButtonWithRatio(title, url, webviewHeightRatio string) Requ
 	return RequestButton{
 		Type:                RequestButtonTypeWebUrl,
 		Title:               title,
-		RequestWebUrlButton: RequestWebUrlButton{
+		RequestWebUrlAction: RequestWebUrlAction{
 			Url: url,
 			WebviewHeightRatio: webviewHeightRatio,
 		},
@@ -119,7 +135,7 @@ func NewRequestWebExtentionUrlButtonWithRatio(title, url, webviewHeightRatio str
 	return RequestButton{
 		Type:                RequestButtonTypeWebUrl,
 		Title:               title,
-		RequestWebUrlButton: RequestWebUrlButton{
+		RequestWebUrlAction: RequestWebUrlAction{
 			Url: url,
 			MessengerExtensions: true,
 			WebviewHeightRatio: webviewHeightRatio,
@@ -127,22 +143,72 @@ func NewRequestWebExtentionUrlButtonWithRatio(title, url, webviewHeightRatio str
 	}
 }
 
+type RequestDefaultAction struct {
+	Type  string `json:"type"`  // Value is web_url or postback
+	RequestWebUrlAction
+	RequestPostbackAction
+}
+
+func NewDefaultActionWithWebUrl(action RequestWebUrlAction) RequestDefaultAction {
+	return RequestDefaultAction{
+		Type: "web_url",
+		RequestWebUrlAction: action,
+	}
+}
+
 type RequestElement struct {
-	Title    string          `json:"title"`               // Required: Bubble title
-	Subtitle string          `json:"subtitle,omitempty"`  // Optional: Bubble subtitle
-	ImageUrl string          `json:"image_url,omitempty"` // Optional: Bubble image
-	ItemUrl  string          `json:"item_url,omitempty"`  // Optional: URL that is opened when bubble is tapped
-	Buttons  []RequestButton `json:"buttons,omitempty"`   // Optional: Set of buttons that appear as call-to-actions
+	Title         string          `json:"title"`               // Required: Bubble title
+	Subtitle      string          `json:"subtitle,omitempty"`  // Optional: Bubble subtitle
+	ImageUrl      string          `json:"image_url,omitempty"` // Optional: Bubble image
+	ItemUrl       string          `json:"item_url,omitempty"`  // Optional: URL that is opened when bubble is tapped
+	DefaultAction *RequestDefaultAction `json:"default_action,omitempty"`
+	Buttons       []RequestButton `json:"buttons,omitempty"`   // Optional: Set of buttons that appear as call-to-actions
+}
+
+func NewRequestElementWithDefaultAction(title, subtitle string, defaultAction RequestDefaultAction, buttons ...RequestButton) RequestElement {
+	return RequestElement{
+		Title: title,
+		Subtitle: subtitle,
+		DefaultAction: &defaultAction,
+		Buttons: buttons,
+	}
 }
 
 func NewGenericTemplate(elements ...RequestElement) RequestAttachmentPayload {
 	return RequestAttachmentPayload{
 		RequestAttachmentTemplate: RequestAttachmentTemplate{
 			TemplateType: RequestAttachmentTemplateTypeGeneric,
-			RequestAttachmentGenericTemplate: RequestAttachmentGenericTemplate{
-				Elements: elements,
+			RequestAttachmentListTemplate: RequestAttachmentListTemplate{
+				RequestAttachmentGenericTemplate: RequestAttachmentGenericTemplate{Elements: elements},
 			},
 		},
+	}
+}
+
+func NewListTemplate(topElementStyle TopElementStyle, elements ...RequestElement) RequestAttachmentPayload {
+	switch topElementStyle {
+	case TopElementStyleCompact:
+	case TopElementStyleLarge:
+	default:
+		panic(fmt.Sprintf("Unknown topElementStyle: %v. Expected either 'large' or 'compact'.", topElementStyle))
+	}
+
+	if elementsLen := len(elements); elementsLen == 0 {
+		panic("len(elements) == 0")
+	} else if elementsLen > LIST_TEMPLATE_MAX_BUTTONS_COUNT {
+		panic(fmt.Sprintf("len(elements)=%v > LIST_TEMPLATE_MAX_BUTTONS_COUNT=%v", elementsLen, LIST_TEMPLATE_MAX_BUTTONS_COUNT))
+	} else {
+		//els := make([]RequestElement, elementsLen)
+		//copy(els, elements)
+		return RequestAttachmentPayload{
+			RequestAttachmentTemplate: RequestAttachmentTemplate{
+				TemplateType: RequestAttachmentTemplateTypeList,
+				RequestAttachmentListTemplate: RequestAttachmentListTemplate{
+					RequestAttachmentGenericTemplate: RequestAttachmentGenericTemplate{Elements: elements},
+					TopElementStyle: string(topElementStyle),
+				},
+			},
+		}
 	}
 }
 

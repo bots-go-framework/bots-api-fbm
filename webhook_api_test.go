@@ -1,4 +1,4 @@
-package fbm_bot_api
+package fbm_api
 
 import (
 	"encoding/json"
