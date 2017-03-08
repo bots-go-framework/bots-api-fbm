@@ -65,6 +65,10 @@ type Sender struct {
 	Actor
 }
 
+func (Sender) GetAvatar() string {
+	return ""
+}
+
 // Recipient ...
 type Recipient struct {
 	Actor
