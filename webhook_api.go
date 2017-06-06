@@ -69,9 +69,17 @@ func (Sender) GetAvatar() string {
 	return ""
 }
 
+func (Sender) GetLanguage() string {
+	return "" // TODO: Check if we can return actual
+}
+
 // Recipient ...
 type Recipient struct {
 	Actor
+}
+
+func (r Recipient) GetLanguage() string {
+	return ""
 }
 
 type Postback struct {
