@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	//"github.com/strongo/strongo-bots"
 	"testing"
-	"github.com/strongo/bots-framework/core"
+	//"github.com/strongo/bots-framework/core"
 )
 
 func TestTextMessage(t *testing.T) {
@@ -44,26 +44,26 @@ func TestTextMessage(t *testing.T) {
 	}
 }
 
-func TestEntryIsInterfaceOfWebhookEntry(t *testing.T) {
-	_ = bots.WebhookEntry(Entry{})
-}
-
-func TestEntriesIsInterfaceOfArrayOfWebhookEntry(t *testing.T) {
-	entries := []Entry{Entry{}}
-	webhookEntries := []bots.WebhookEntry{}
-	for _, entry := range entries {
-		_ = append(webhookEntries, bots.WebhookEntry(entry))
-	}
-}
-
-func TestSenderIsInterfaceOfWebhookSender(t *testing.T) {
-	_ = bots.WebhookSender(Sender{})
-}
-
-func TestSenderIsInterfaceOfWebhookRecipient(t *testing.T) {
-	_ = bots.WebhookRecipient(Recipient{})
-}
-
-func TestMessagingIsInterfaceOfWebhookInput(t *testing.T) {
-	//_ = bots.WebhookInput(Messaging{})
-}
+//func TestEntryIsInterfaceOfWebhookEntry(t *testing.T) {
+//	_ = bots.WebhookEntry(Entry{})
+//}
+//
+//func TestEntriesIsInterfaceOfArrayOfWebhookEntry(t *testing.T) {
+//	entries := []Entry{Entry{}}
+//	webhookEntries := []bots.WebhookEntry{}
+//	for _, entry := range entries {
+//		_ = append(webhookEntries, bots.WebhookEntry(entry))
+//	}
+//}
+//
+//func TestSenderIsInterfaceOfWebhookSender(t *testing.T) {
+//	_ = bots.WebhookSender(Sender{})
+//}
+//
+//func TestSenderIsInterfaceOfWebhookRecipient(t *testing.T) {
+//	_ = bots.WebhookRecipient(Recipient{})
+//}
+//
+//func TestMessagingIsInterfaceOfWebhookInput(t *testing.T) {
+//	//_ = bots.WebhookInput(Messaging{})
+//}

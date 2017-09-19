@@ -1,0 +1,44 @@
+{
+  "recipient": {
+    "id": "1315593905118354"
+  },
+  "message": {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "text": "",
+        "buttons": null,
+        "elements": [
+          {
+            "title": "Welcome",
+            "subtitle": "This is an app to split bills and track debt records.",
+            "default_action": {
+              "type": "web_url",
+              "url": "https://debtstracker-dev1.appspot.com/app/#fbm579129655604667",
+              "messenger_extensions": true
+            },
+            "buttons": [
+              {
+                "type": "postback",
+                "title": "📝  Debts",
+                "payload": "fbm-debts"
+              },
+              {
+                "type": "postback",
+                "title": "📮  Bills",
+                "payload": "fbm-bills"
+              },
+              {
+                "type": "postback",
+                "title": "⚙  Settings",
+                "payload": "fbm-settings"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "notification_type": "NO_PUSH"
+}

@@ -1,5 +1,7 @@
 package fbm_api
 
+//go:generate ffjson $GOFILE
+
 import "fmt"
 
 type RequestNotificationType string
@@ -68,6 +70,8 @@ const (
 )
 
 type RequestAttachmentButtonTemplate struct {
+	Text string `json:"text,omitempty"`
+	Buttons []RequestButton `json:"buttons,omitempty"`
 }
 
 type RequestAttachmentReceiptTemplate struct {
@@ -89,7 +93,7 @@ type RequestAttachmentPayload struct {
 type RequestWebUrlAction struct {
 	Url                 string `json:"url,omitempty"` // For web_url buttons, this URL is opened in a mobile browser when the button is tapped
 	FallbackUrl         string `json:"fallback_url,omitempty"`
-	WebviewHeightRatio  string `json:"webview_height_ratio,omitempty"`
+	WebviewHeightRatio  WebviewHeightRatio `json:"webview_height_ratio,omitempty"`
 	MessengerExtensions bool `json:"messenger_extensions,omitempty"`
 }
 
@@ -120,7 +124,7 @@ func NewRequestWebUrlButton(title, url string) RequestButton {
 	}
 }
 
-func NewRequestWebUrlButtonWithRatio(title, url, webviewHeightRatio string) RequestButton {
+func NewRequestWebUrlButtonWithRatio(title, url string, webviewHeightRatio WebviewHeightRatio) RequestButton {
 	return RequestButton{
 		Type:                RequestButtonTypeWebUrl,
 		Title:               title,
@@ -131,7 +135,7 @@ func NewRequestWebUrlButtonWithRatio(title, url, webviewHeightRatio string) Requ
 	}
 }
 
-func NewRequestWebExtentionUrlButtonWithRatio(title, url, webviewHeightRatio string) RequestButton {
+func NewRequestWebExtentionUrlButtonWithRatio(title, url string, webviewHeightRatio WebviewHeightRatio) RequestButton {
 	return RequestButton{
 		Type:                RequestButtonTypeWebUrl,
 		Title:               title,
@@ -174,12 +178,32 @@ func NewRequestElementWithDefaultAction(title, subtitle string, defaultAction Re
 	}
 }
 
+func NewRequestElement(title, subtitle string, buttons ...RequestButton) RequestElement {
+	return RequestElement{
+		Title: title,
+		Subtitle: subtitle,
+		Buttons: buttons,
+	}
+}
+
 func NewGenericTemplate(elements ...RequestElement) RequestAttachmentPayload {
 	return RequestAttachmentPayload{
 		RequestAttachmentTemplate: RequestAttachmentTemplate{
 			TemplateType: RequestAttachmentTemplateTypeGeneric,
 			RequestAttachmentListTemplate: RequestAttachmentListTemplate{
 				RequestAttachmentGenericTemplate: RequestAttachmentGenericTemplate{Elements: elements},
+			},
+		},
+	}
+}
+
+func NewButtonTemplate(text string, buttons ...RequestButton) RequestAttachmentPayload {
+	return RequestAttachmentPayload{
+		RequestAttachmentTemplate: RequestAttachmentTemplate{
+			TemplateType: RequestAttachmentTemplateTypeButton,
+			RequestAttachmentButtonTemplate: RequestAttachmentButtonTemplate{
+				Text: text,
+				Buttons: buttons,
 			},
 		},
 	}

@@ -1,5 +1,7 @@
 package fbm_api
 
+//go:generate ffjson $GOFILE
+
 import (
 	"time"
 )
@@ -83,7 +85,8 @@ func (r Recipient) GetLanguage() string {
 }
 
 type Postback struct {
-	Payload Payload `json:"payload"`
+	Title string `json:"title"`
+	Payload string `json:"payload"`
 }
 
 type Delivery struct {
