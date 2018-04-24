@@ -67,6 +67,12 @@ type Sender struct {
 	Actor
 }
 
+func (Sender) IsBotUser() bool {
+	return false
+}
+
+
+
 func (Sender) GetAvatar() string {
 	return ""
 }
@@ -78,6 +84,10 @@ func (Sender) GetLanguage() string {
 // Recipient ...
 type Recipient struct {
 	Actor
+}
+
+func (Recipient) IsBotUser() bool {
+	return false
 }
 
 func (r Recipient) GetLanguage() string {

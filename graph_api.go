@@ -6,8 +6,8 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"golang.org/x/net/context"
-	"github.com/strongo/app/log"
+	"context"
+	"github.com/strongo/log"
 	"github.com/pkg/errors"
 )
 
