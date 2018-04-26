@@ -65,5 +65,5 @@ func TestTextMessage(t *testing.T) {
 //}
 //
 //func TestMessagingIsInterfaceOfWebhookInput(t *testing.T) {
-//	//_ = bots.WebhookInput(Messaging{})
+//	//_ = bots.webhookInput(Messaging{})
 //}
