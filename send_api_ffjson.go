@@ -1300,7 +1300,7 @@ mainparse:
 
 handle_Url:
 
-	/* handler: j.Url type=string kind=string quoted=false*/
+	/* handler: j.URL type=string kind=string quoted=false*/
 
 	{
 
@@ -1974,7 +1974,7 @@ mainparse:
 
 handle_Url:
 
-	/* handler: j.Url type=string kind=string quoted=false*/
+	/* handler: j.URL type=string kind=string quoted=false*/
 
 	{
 
@@ -3261,7 +3261,7 @@ handle_Title:
 
 handle_Url:
 
-	/* handler: j.Url type=string kind=string quoted=false*/
+	/* handler: j.URL type=string kind=string quoted=false*/
 
 	{
 
@@ -3729,7 +3729,7 @@ handle_Type:
 
 handle_Url:
 
-	/* handler: j.Url type=string kind=string quoted=false*/
+	/* handler: j.URL type=string kind=string quoted=false*/
 
 	{
 
@@ -5360,7 +5360,7 @@ mainparse:
 
 handle_Url:
 
-	/* handler: j.Url type=string kind=string quoted=false*/
+	/* handler: j.URL type=string kind=string quoted=false*/
 
 	{
 

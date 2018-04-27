@@ -1159,7 +1159,7 @@ mainparse:
 
 handle_Url:
 
-	/* handler: j.Url type=string kind=string quoted=false*/
+	/* handler: j.URL type=string kind=string quoted=false*/
 
 	{
 
