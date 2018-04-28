@@ -85,7 +85,7 @@ func (Actor) GetAvatar() string {
 }
 
 // GetLanguage returns preferred language (not implemented yet)
-func (Sender) GetLanguage() string {
+func (Actor) GetLanguage() string {
 	return "" // TODO: Check if we can return actual
 }
 
