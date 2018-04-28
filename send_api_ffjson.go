@@ -3,7 +3,7 @@
 // source: send_api.go
 // DO NOT EDIT!
 
-package fbm_api
+package fbmbotapi
 
 import (
 	"bytes"
@@ -1168,9 +1168,9 @@ func (j *RequestAttachmentImage) MarshalJSONBuf(buf fflib.EncodingBuffer) error 
 	_ = obj
 	_ = err
 	buf.WriteString(`{ `)
-	if len(j.Url) != 0 {
+	if len(j.URL) != 0 {
 		buf.WriteString(`"url":`)
-		fflib.WriteJsonString(buf, string(j.Url))
+		fflib.WriteJsonString(buf, string(j.URL))
 		buf.WriteByte(',')
 	}
 	buf.Rewind(1)
@@ -1316,7 +1316,7 @@ handle_Url:
 
 			outBuf := fs.Output.Bytes()
 
-			j.Url = string(string(outBuf))
+			j.URL = string(string(outBuf))
 
 		}
 	}
@@ -1680,9 +1680,9 @@ func (j *RequestAttachmentPayload) MarshalJSONBuf(buf fflib.EncodingBuffer) erro
 	_ = obj
 	_ = err
 	buf.WriteString(`{ `)
-	if len(j.Url) != 0 {
+	if len(j.URL) != 0 {
 		buf.WriteString(`"url":`)
-		fflib.WriteJsonString(buf, string(j.Url))
+		fflib.WriteJsonString(buf, string(j.URL))
 		buf.WriteByte(',')
 	}
 	if len(j.TemplateType) != 0 {
@@ -1990,7 +1990,7 @@ handle_Url:
 
 			outBuf := fs.Output.Bytes()
 
-			j.Url = string(string(outBuf))
+			j.URL = string(string(outBuf))
 
 		}
 	}
@@ -2931,14 +2931,14 @@ func (j *RequestButton) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	buf.WriteString(`,"title":`)
 	fflib.WriteJsonString(buf, string(j.Title))
 	buf.WriteByte(',')
-	if len(j.Url) != 0 {
+	if len(j.URL) != 0 {
 		buf.WriteString(`"url":`)
-		fflib.WriteJsonString(buf, string(j.Url))
+		fflib.WriteJsonString(buf, string(j.URL))
 		buf.WriteByte(',')
 	}
-	if len(j.FallbackUrl) != 0 {
+	if len(j.FallbackURL) != 0 {
 		buf.WriteString(`"fallback_url":`)
-		fflib.WriteJsonString(buf, string(j.FallbackUrl))
+		fflib.WriteJsonString(buf, string(j.FallbackURL))
 		buf.WriteByte(',')
 	}
 	if len(j.WebviewHeightRatio) != 0 {
@@ -3277,7 +3277,7 @@ handle_Url:
 
 			outBuf := fs.Output.Bytes()
 
-			j.Url = string(string(outBuf))
+			j.URL = string(string(outBuf))
 
 		}
 	}
@@ -3287,7 +3287,7 @@ handle_Url:
 
 handle_FallbackUrl:
 
-	/* handler: j.FallbackUrl type=string kind=string quoted=false*/
+	/* handler: j.FallbackURL type=string kind=string quoted=false*/
 
 	{
 
@@ -3303,7 +3303,7 @@ handle_FallbackUrl:
 
 			outBuf := fs.Output.Bytes()
 
-			j.FallbackUrl = string(string(outBuf))
+			j.FallbackURL = string(string(outBuf))
 
 		}
 	}
@@ -3443,14 +3443,14 @@ func (j *RequestDefaultAction) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	buf.WriteString(`{ "type":`)
 	fflib.WriteJsonString(buf, string(j.Type))
 	buf.WriteByte(',')
-	if len(j.Url) != 0 {
+	if len(j.URL) != 0 {
 		buf.WriteString(`"url":`)
-		fflib.WriteJsonString(buf, string(j.Url))
+		fflib.WriteJsonString(buf, string(j.URL))
 		buf.WriteByte(',')
 	}
-	if len(j.FallbackUrl) != 0 {
+	if len(j.FallbackURL) != 0 {
 		buf.WriteString(`"fallback_url":`)
-		fflib.WriteJsonString(buf, string(j.FallbackUrl))
+		fflib.WriteJsonString(buf, string(j.FallbackURL))
 		buf.WriteByte(',')
 	}
 	if len(j.WebviewHeightRatio) != 0 {
@@ -3745,7 +3745,7 @@ handle_Url:
 
 			outBuf := fs.Output.Bytes()
 
-			j.Url = string(string(outBuf))
+			j.URL = string(string(outBuf))
 
 		}
 	}
@@ -3755,7 +3755,7 @@ handle_Url:
 
 handle_FallbackUrl:
 
-	/* handler: j.FallbackUrl type=string kind=string quoted=false*/
+	/* handler: j.FallbackURL type=string kind=string quoted=false*/
 
 	{
 
@@ -3771,7 +3771,7 @@ handle_FallbackUrl:
 
 			outBuf := fs.Output.Bytes()
 
-			j.FallbackUrl = string(string(outBuf))
+			j.FallbackURL = string(string(outBuf))
 
 		}
 	}
@@ -3916,14 +3916,14 @@ func (j *RequestElement) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 		fflib.WriteJsonString(buf, string(j.Subtitle))
 		buf.WriteByte(',')
 	}
-	if len(j.ImageUrl) != 0 {
+	if len(j.ImageURL) != 0 {
 		buf.WriteString(`"image_url":`)
-		fflib.WriteJsonString(buf, string(j.ImageUrl))
+		fflib.WriteJsonString(buf, string(j.ImageURL))
 		buf.WriteByte(',')
 	}
-	if len(j.ItemUrl) != 0 {
+	if len(j.ItemURL) != 0 {
 		buf.WriteString(`"item_url":`)
-		fflib.WriteJsonString(buf, string(j.ItemUrl))
+		fflib.WriteJsonString(buf, string(j.ItemURL))
 		buf.WriteByte(',')
 	}
 	if j.DefaultAction != nil {
@@ -4246,7 +4246,7 @@ handle_Subtitle:
 
 handle_ImageUrl:
 
-	/* handler: j.ImageUrl type=string kind=string quoted=false*/
+	/* handler: j.ImageURL type=string kind=string quoted=false*/
 
 	{
 
@@ -4262,7 +4262,7 @@ handle_ImageUrl:
 
 			outBuf := fs.Output.Bytes()
 
-			j.ImageUrl = string(string(outBuf))
+			j.ImageURL = string(string(outBuf))
 
 		}
 	}
@@ -4272,7 +4272,7 @@ handle_ImageUrl:
 
 handle_ItemUrl:
 
-	/* handler: j.ItemUrl type=string kind=string quoted=false*/
+	/* handler: j.ItemURL type=string kind=string quoted=false*/
 
 	{
 
@@ -4288,7 +4288,7 @@ handle_ItemUrl:
 
 			outBuf := fs.Output.Bytes()
 
-			j.ItemUrl = string(string(outBuf))
+			j.ItemURL = string(string(outBuf))
 
 		}
 	}
@@ -4896,9 +4896,9 @@ func (j *RequestRecipient) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	_ = obj
 	_ = err
 	buf.WriteString(`{ `)
-	if len(j.Id) != 0 {
+	if len(j.ID) != 0 {
 		buf.WriteString(`"id":`)
-		fflib.WriteJsonString(buf, string(j.Id))
+		fflib.WriteJsonString(buf, string(j.ID))
 		buf.WriteByte(',')
 	}
 	if len(j.PhoneNumber) != 0 {
@@ -5070,7 +5070,7 @@ handle_Id:
 
 			outBuf := fs.Output.Bytes()
 
-			j.Id = string(string(outBuf))
+			j.ID = string(string(outBuf))
 
 		}
 	}
@@ -5123,7 +5123,7 @@ done:
 }
 
 // MarshalJSON marshal bytes to json - template
-func (j *RequestWebUrlAction) MarshalJSON() ([]byte, error) {
+func (j *RequestWebURLAction) MarshalJSON() ([]byte, error) {
 	var buf fflib.Buffer
 	if j == nil {
 		buf.WriteString("null")
@@ -5137,7 +5137,7 @@ func (j *RequestWebUrlAction) MarshalJSON() ([]byte, error) {
 }
 
 // MarshalJSONBuf marshal buff to json - template
-func (j *RequestWebUrlAction) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
+func (j *RequestWebURLAction) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	if j == nil {
 		buf.WriteString("null")
 		return nil
@@ -5147,14 +5147,14 @@ func (j *RequestWebUrlAction) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	_ = obj
 	_ = err
 	buf.WriteString(`{ `)
-	if len(j.Url) != 0 {
+	if len(j.URL) != 0 {
 		buf.WriteString(`"url":`)
-		fflib.WriteJsonString(buf, string(j.Url))
+		fflib.WriteJsonString(buf, string(j.URL))
 		buf.WriteByte(',')
 	}
-	if len(j.FallbackUrl) != 0 {
+	if len(j.FallbackURL) != 0 {
 		buf.WriteString(`"fallback_url":`)
-		fflib.WriteJsonString(buf, string(j.FallbackUrl))
+		fflib.WriteJsonString(buf, string(j.FallbackURL))
 		buf.WriteByte(',')
 	}
 	if len(j.WebviewHeightRatio) != 0 {
@@ -5197,13 +5197,13 @@ var ffjKeyRequestWebUrlActionWebviewHeightRatio = []byte("webview_height_ratio")
 var ffjKeyRequestWebUrlActionMessengerExtensions = []byte("messenger_extensions")
 
 // UnmarshalJSON umarshall json - template of ffjson
-func (j *RequestWebUrlAction) UnmarshalJSON(input []byte) error {
+func (j *RequestWebURLAction) UnmarshalJSON(input []byte) error {
 	fs := fflib.NewFFLexer(input)
 	return j.UnmarshalJSONFFLexer(fs, fflib.FFParse_map_start)
 }
 
 // UnmarshalJSONFFLexer fast json unmarshall - template ffjson
-func (j *RequestWebUrlAction) UnmarshalJSONFFLexer(fs *fflib.FFLexer, state fflib.FFParseState) error {
+func (j *RequestWebURLAction) UnmarshalJSONFFLexer(fs *fflib.FFLexer, state fflib.FFParseState) error {
 	var err error
 	currentKey := ffjtRequestWebUrlActionbase
 	_ = currentKey
@@ -5376,7 +5376,7 @@ handle_Url:
 
 			outBuf := fs.Output.Bytes()
 
-			j.Url = string(string(outBuf))
+			j.URL = string(string(outBuf))
 
 		}
 	}
@@ -5386,7 +5386,7 @@ handle_Url:
 
 handle_FallbackUrl:
 
-	/* handler: j.FallbackUrl type=string kind=string quoted=false*/
+	/* handler: j.FallbackURL type=string kind=string quoted=false*/
 
 	{
 
@@ -5402,7 +5402,7 @@ handle_FallbackUrl:
 
 			outBuf := fs.Output.Bytes()
 
-			j.FallbackUrl = string(string(outBuf))
+			j.FallbackURL = string(string(outBuf))
 
 		}
 	}

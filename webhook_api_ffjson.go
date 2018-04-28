@@ -3,7 +3,7 @@
 // source: webhook_api.go
 // DO NOT EDIT!
 
-package fbm_api
+package fbmbotapi
 
 import (
 	"bytes"
@@ -2036,7 +2036,7 @@ func (j *Payload) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	_ = obj
 	_ = err
 	buf.WriteString(`{"url":`)
-	fflib.WriteJsonString(buf, string(j.Url))
+	fflib.WriteJsonString(buf, string(j.URL))
 	buf.WriteByte('}')
 	return nil
 }
@@ -2179,7 +2179,7 @@ handle_Url:
 
 			outBuf := fs.Output.Bytes()
 
-			j.Url = string(string(outBuf))
+			j.URL = string(string(outBuf))
 
 		}
 	}

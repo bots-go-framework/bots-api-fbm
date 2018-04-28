@@ -1,4 +1,4 @@
-package fbm_api
+package fbmbotapi
 
 //go:generate ffjson $GOFILE
 
@@ -12,17 +12,19 @@ type ReceivedMessage struct {
 	Entries []Entry `json:"entry"`
 }
 
-// Entry ...
+// Entry hold entry data
 type Entry struct {
-	ID        string       `json:"id"`
+	ID        string      `json:"id"`
 	Time      int64       `json:"time"`
 	Messaging []Messaging `json:"messaging"`
 }
 
+// GetID returns ID
 func (e Entry) GetID() interface{} {
 	return e.ID
 }
 
+// GetTime returns time of the message
 func (e Entry) GetTime() time.Time {
 	return time.Unix(e.Time, 0)
 }
@@ -37,78 +39,80 @@ type Messaging struct {
 	Delivery  *Delivery `json:"delivery"`
 }
 
-
+// Actor represents actor
 type Actor struct {
 	ID string `json:"id"`
 }
 
+// GetID returns ID of the actor
 func (a Actor) GetID() interface{} {
 	return a.ID
 }
 
+// GetFirstName returns first name
 func (a Actor) GetFirstName() string {
 	return "First" //TODO: Make call to API
 }
 
+// GetLastName returns last name
 func (a Actor) GetLastName() string {
 	return "Last" //TODO: Make call to API
 }
 
+// GetUserName returns username
 func (a Actor) GetUserName() string {
 	return "Username" //TODO: Make call to API
 }
 
+// Platform returns "fbm"
 func (a Actor) Platform() string {
 	return "fbm"
 }
 
-// Sender ...
+// Sender represents sender
 type Sender struct {
 	Actor
 }
 
-func (Sender) IsBotUser() bool {
+// IsBotUser returns false
+func (Actor) IsBotUser() bool {
 	return false
 }
 
-
-
-func (Sender) GetAvatar() string {
+// GetAvatar is not supported or not implemented yet
+func (Actor) GetAvatar() string {
 	return ""
 }
 
+// GetLanguage returns preferred language (not implemented yet)
 func (Sender) GetLanguage() string {
 	return "" // TODO: Check if we can return actual
 }
 
-// Recipient ...
+// Recipient represents recipient
 type Recipient struct {
 	Actor
 }
 
-func (Recipient) IsBotUser() bool {
-	return false
-}
-
-func (r Recipient) GetLanguage() string {
-	return ""
-}
-
+// Postback message
 type Postback struct {
-	Title string `json:"title"`
+	Title   string `json:"title"`
 	Payload string `json:"payload"`
 }
 
+// Delivery message
 type Delivery struct {
 	Watermark  int64      `json:"watermark"`
 	MessageIDs MessageIDs `json:"mids"`
 }
 
+// MessageID defines message ID
 type MessageID string
 
+// MessageIDs defiens message IDs
 type MessageIDs []MessageID
 
-// Message ...
+// Message defines message
 type Message struct {
 	MID         string       `json:"mid"`
 	Seq         int          `json:"seq"`
@@ -116,13 +120,15 @@ type Message struct {
 	Attachments []Attachment `json:"attachments"`
 }
 
+// Attachment defines attachment
 type Attachment struct {
 	Type    string  `json:"type"`
 	Payload Payload `json:"paylaod"`
 }
 
+// Payload defines payload
 type Payload struct {
-	Url string `json:"url"`
+	URL string `json:"url"`
 }
 
 // SendMessage ...
@@ -133,21 +139,22 @@ type SendMessage struct {
 	} `json:"message"`
 }
 
-
+// IntID not supported
 func (m Message) IntID() int64 {
 	panic("Not supported")
 }
 
+// StringID returns message ID as string
 func (m Message) StringID() string {
 	return m.MID
 }
 
+// Sequence returns Seq of message
 func (m Message) Sequence() int {
 	return m.Seq
 }
 
+// Text returns text of the message
 func (m Message) Text() string {
 	return m.MText
 }
-
-

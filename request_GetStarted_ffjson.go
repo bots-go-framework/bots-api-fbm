@@ -3,7 +3,7 @@
 // source: request_GetStarted.go
 // DO NOT EDIT!
 
-package fbm_api
+package fbmbotapi
 
 import (
 	"bytes"

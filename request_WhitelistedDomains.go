@@ -1,4 +1,4 @@
-package fbm_api
+package fbmbotapi
 
 //go:generate ffjson $GOFILE
 

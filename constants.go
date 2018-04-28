@@ -1,5 +1,5 @@
-package fbm_api
+package fbmbotapi
 
 const (
-	LIST_TEMPLATE_MAX_BUTTONS_COUNT = 4
+	listTemplateMaxButtonsCount = 4
 )

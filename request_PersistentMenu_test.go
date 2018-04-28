@@ -1,8 +1,8 @@
-package fbm_api
+package fbmbotapi
 
 import (
-	"testing"
 	"github.com/pquerna/ffjson/ffjson"
+	"testing"
 )
 
 func TestNewMenuItemWebUrl(t *testing.T) {

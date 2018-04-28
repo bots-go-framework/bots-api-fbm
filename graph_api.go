@@ -1,53 +1,59 @@
-package fbm_api
+package fbmbotapi
 
 import (
-	"net/http"
-	"github.com/pquerna/ffjson/ffjson"
 	"bytes"
-	"fmt"
-	"io/ioutil"
 	"context"
-	"github.com/strongo/log"
+	"fmt"
 	"github.com/pkg/errors"
+	"github.com/pquerna/ffjson/ffjson"
+	"github.com/strongo/log"
+	"io/ioutil"
+	"net/http"
 )
 
-const ContentTypeApplicationJson = "application/json"
+const contentTypeApplicationJSON = "application/json"
 
 const (
-	EndpointMeMessage = "me/messages"
-	EndpointMeMessengerProfile = "me/messenger_profile"
+	endpointMeMessage          = "me/messages"
+	endpointMeMessengerProfile = "me/messenger_profile"
 )
 
+// GraphAPI is Facebook API client
 type GraphAPI struct {
-	httpClient *http.Client
+	httpClient  *http.Client
 	AccessToken string
 }
 
-func NewGraphApi(httpClient *http.Client, accessToken string) GraphAPI {
+// NewGraphAPI creates new API client
+func NewGraphAPI(httpClient *http.Client, accessToken string) GraphAPI {
 	return GraphAPI{
-		httpClient: httpClient,
+		httpClient:  httpClient,
 		AccessToken: accessToken,
 	}
 }
 
-func (graphAPI GraphAPI) apiUrl(endpoint string) string {
+func (graphAPI GraphAPI) apiURL(endpoint string) string {
 	return fmt.Sprintf("https://graph.facebook.com/v2.6/%v/?access_token=%v", endpoint, graphAPI.AccessToken)
 }
 
-func (graphAPI GraphAPI) SetGetStarted(c context.Context, message GetStartedMessage) (error) {
-	return graphAPI.postMessage(c, EndpointMeMessengerProfile, &message)
+// SetGetStarted sets get started message
+func (graphAPI GraphAPI) SetGetStarted(c context.Context, message GetStartedMessage) error {
+	return graphAPI.postMessage(c, endpointMeMessengerProfile, &message)
 }
 
-func (graphAPI GraphAPI) SetPersistentMenu(c context.Context, message PersistentMenuMessage) (error){
-	return graphAPI.postMessage(c, EndpointMeMessengerProfile, &message)
+// SetPersistentMenu sets persistent menu
+func (graphAPI GraphAPI) SetPersistentMenu(c context.Context, message PersistentMenuMessage) error {
+	return graphAPI.postMessage(c, endpointMeMessengerProfile, &message)
 }
 
-func (graphAPI GraphAPI) SetWhitelistedDomains(c context.Context, message WhitelistedDomainsMessage) (error){
-	return graphAPI.postMessage(c, EndpointMeMessengerProfile, &message)
+// SetWhitelistedDomains sets whitelisted domains
+func (graphAPI GraphAPI) SetWhitelistedDomains(c context.Context, message WhitelistedDomainsMessage) error {
+	return graphAPI.postMessage(c, endpointMeMessengerProfile, &message)
 }
 
-func (graphAPI GraphAPI) SendMessage(c context.Context, request Request) (error){
-	return graphAPI.postMessage(c, EndpointMeMessage, &request)
+// SendMessage sends message
+func (graphAPI GraphAPI) SendMessage(c context.Context, request Request) error {
+	return graphAPI.postMessage(c, endpointMeMessage, &request)
 }
 
 func (graphAPI GraphAPI) postMessage(c context.Context, endpoint string, message interface{}) error {
@@ -57,10 +63,10 @@ func (graphAPI GraphAPI) postMessage(c context.Context, endpoint string, message
 		return err
 	}
 
-	apiUrl := graphAPI.apiUrl(endpoint)
-	log.Debugf(c, "Posting to FB API: %v\n%v", apiUrl, string(content))
+	apiURL := graphAPI.apiURL(endpoint)
+	log.Debugf(c, "Posting to FB API: %v\n%v", apiURL, string(content))
 
-	resp, err := graphAPI.httpClient.Post(apiUrl, ContentTypeApplicationJson, bytes.NewReader(content))
+	resp, err := graphAPI.httpClient.Post(apiURL, contentTypeApplicationJSON, bytes.NewReader(content))
 	ffjson.Pool(content)
 	if err != nil {
 		return err

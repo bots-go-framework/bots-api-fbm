@@ -3,7 +3,7 @@
 // source: request_PersistentMenu.go
 // DO NOT EDIT!
 
-package fbm_api
+package fbmbotapi
 
 import (
 	"bytes"
@@ -889,7 +889,7 @@ done:
 }
 
 // MarshalJSON marshal bytes to json - template
-func (j *MenuItemWebUrl) MarshalJSON() ([]byte, error) {
+func (j *MenuItemWebURL) MarshalJSON() ([]byte, error) {
 	var buf fflib.Buffer
 	if j == nil {
 		buf.WriteString("null")
@@ -903,7 +903,7 @@ func (j *MenuItemWebUrl) MarshalJSON() ([]byte, error) {
 }
 
 // MarshalJSONBuf marshal buff to json - template
-func (j *MenuItemWebUrl) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
+func (j *MenuItemWebURL) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	if j == nil {
 		buf.WriteString("null")
 		return nil
@@ -913,7 +913,7 @@ func (j *MenuItemWebUrl) MarshalJSONBuf(buf fflib.EncodingBuffer) error {
 	_ = obj
 	_ = err
 	buf.WriteString(`{"url":`)
-	fflib.WriteJsonString(buf, string(j.Url))
+	fflib.WriteJsonString(buf, string(j.URL))
 	buf.WriteString(`,"webview_height_ratio":`)
 	fflib.WriteJsonString(buf, string(j.WebviewHeightRatio))
 	buf.WriteByte(',')
@@ -968,13 +968,13 @@ var ffjKeyMenuItemWebUrlType = []byte("type")
 var ffjKeyMenuItemWebUrlTitle = []byte("title")
 
 // UnmarshalJSON umarshall json - template of ffjson
-func (j *MenuItemWebUrl) UnmarshalJSON(input []byte) error {
+func (j *MenuItemWebURL) UnmarshalJSON(input []byte) error {
 	fs := fflib.NewFFLexer(input)
 	return j.UnmarshalJSONFFLexer(fs, fflib.FFParse_map_start)
 }
 
 // UnmarshalJSONFFLexer fast json unmarshall - template ffjson
-func (j *MenuItemWebUrl) UnmarshalJSONFFLexer(fs *fflib.FFLexer, state fflib.FFParseState) error {
+func (j *MenuItemWebURL) UnmarshalJSONFFLexer(fs *fflib.FFLexer, state fflib.FFParseState) error {
 	var err error
 	currentKey := ffjtMenuItemWebUrlbase
 	_ = currentKey
@@ -1175,7 +1175,7 @@ handle_Url:
 
 			outBuf := fs.Output.Bytes()
 
-			j.Url = string(string(outBuf))
+			j.URL = string(string(outBuf))
 
 		}
 	}
