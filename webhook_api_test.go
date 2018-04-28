@@ -12,15 +12,15 @@ func TestTextMessage(t *testing.T) {
   "object":"page",
   "entry":[
     {
-      "id": 123456790,
+      "id": "123456790",
       "time":1457764198246,
       "messaging":[
         {
           "sender":{
-            "id":987654321
+            "id":"987654321"
           },
           "recipient":{
-            "id":123456790
+            "id":"123456790"
           },
           "timestamp":1457764197627,
           "message":{
